@@ -1,0 +1,24 @@
+{
+  "name": "payment-brick-fast-payments-sample",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Mercado Pago Payment Brick for Fast Payments sample project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "localtunnel": "lt --port 8080"
+  },
+  "engines": {
+    "node": ">=20.11.1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "hbs": "^4.2.0",
+    "mercadopago": "^2.8.0",
+    "open": "^10.1.2",
+    "uuid": "^11.1.0",
+    "localtunnel": "^2.0.2"
+  }
+}
