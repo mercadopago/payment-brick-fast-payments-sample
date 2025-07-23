@@ -29,7 +29,7 @@ async function loadPaymentForm() {
         await renderPaymentBrick();
         
     } catch (error) {
-        // For a list of possible errors, see: https://www.mercadopago.com/developers/es/docs/checkout-api-v2/payment-integration/fast-payments#bookmark_erros_da_subclasse_authenticator
+        // For a list of possible errors, see: https://www.mercadopago.com/developers/en/docs/checkout-api-v2/payment-integration/fast-payments#bookmark_erros_da_subclasse_authenticator
 
         alert("Error loading payment form, details in console");
         console.error(error);
