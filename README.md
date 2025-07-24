@@ -42,10 +42,10 @@ Fast Payments are only available on mobile devices. Therefore, to test this inte
 1. Run the following command to start the application:
 
 ```bash
-MERCADO_PAGO_SAMPLE_PUBLIC_KEY=YOUR_PUBLIC_KEY MERCADO_PAGO_SAMPLE_ACCESS_TOKEN=YOUR_ACCESS_TOKEN PAYER_EMAIL=YOUR_PAYER_EMAIL npm start
+MERCADO_PAGO_SAMPLE_PUBLIC_KEY=YOUR_PUBLIC_KEY MERCADO_PAGO_SAMPLE_ACCESS_TOKEN=YOUR_ACCESS_TOKEN npm start
 ``` 
 
-Remember to replace the values of `YOUR_PUBLIC_KEY`, `YOUR_ACCESS_TOKEN` and `PAYER_EMAIL` with the corresponding [credentials](https://www.mercadopago.com/developers/panel) from your account and a valid email to be used as the buyer/payer. The email can be from a real user or from a test user.
+Remember to replace the values of `YOUR_PUBLIC_KEY` and `YOUR_ACCESS_TOKEN` with the corresponding [credentials](https://www.mercadopago.com/developers/panel) from your account.
 
 2. Run the following command in a new terminal window to create a tunnel:
 ```bash

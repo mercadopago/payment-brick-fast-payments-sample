@@ -1,32 +1,17 @@
 const mercadoPagoPublicKey = document.getElementById("mercado-pago-public-key").value;
-const payerEmail = document.getElementById("payer-email").value;
-
 const mercadopago = new MercadoPago(mercadoPagoPublicKey);
+
+let buyerEmail;
+let authenticator;
 let paymentBrickController;
-let fastPaymentToken;
 
-async function loadPaymentForm() {
-    // Make sure the product cost makes sense according to your country's currency
-    // Too low or too high values might cause the mercadopago.authenticator method to throw an error
-    const productCost = parseFloat(document.getElementById('amount').value).toFixed(2);
-
-    // The user email must be from an existing Mercado Pago test user or a real Mercado Pago user
-    // Otherwise, the mercadopago.authenticator will not find the user and will throw an error
-    const userEmail = payerEmail;
-    
-    try {
-        // Step 1: Initialize authenticator
-        // mercadopago.authenticator will call an API to validate the productCost and userEmail
-        const authenticator = await mercadopago.authenticator(productCost, userEmail);
-        
-        // Step 2: Generate fastPaymentToken
+async function loadPaymentForm() {    
+    try {       
         // authenticator.show will show a popup to the user and then redirect to Mercado Pago or Mercado Libre mobile app.
         // once the user authenticates, this promise will resolve with the fastPaymentToken
-        fastPaymentToken = await authenticator.show();
-        
-        // Step 3: Render Payment Brick
-        // after we have the fastPaymentToken, we can render the payment brick
-        await renderPaymentBrick();
+        const fastPaymentToken = await authenticator.show();
+
+        await renderPaymentBrick(fastPaymentToken);
         
     } catch (error) {
         // For a list of possible errors, see: https://www.mercadopago.com/developers/en/docs/checkout-api-v2/payment-integration/fast-payments#bookmark_erros_da_subclasse_authenticator
@@ -36,10 +21,10 @@ async function loadPaymentForm() {
     }
 }
 
-async function renderPaymentBrick() {
+async function renderPaymentBrick(fastPaymentToken) {
     const settings = {
         initialization: {
-            fastPaymentToken: fastPaymentToken,
+            fastPaymentToken,
         },
         callbacks: {
             onReady: () => {
@@ -94,7 +79,7 @@ const proccessPayment = async (bricksFormData) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             formData: bricksFormData,
-            userEmail: payerEmail
+            userEmail: buyerEmail
         }),
     })
     const result = await response.json();
@@ -106,12 +91,48 @@ const proccessPayment = async (bricksFormData) => {
     return result;
 }
 
-// Handle transitions
-document.getElementById('checkout-btn').addEventListener('click', function(){
-    $('.container__cart').fadeOut(500);
-    setTimeout(() => {
-        $('.container__payment').show(500).fadeIn();
-    }, 500);
+document.getElementById('checkout-btn').addEventListener('click', async function(){
+    buyerEmail = document.getElementById('buyer-email').value;
+    if (!buyerEmail) {
+        alert('Please enter a valid email');
+        return;
+    }
+
+    // When the user clicks on checkout, we call the authenticator method to validate if the user can pay using fast payments
+    // The authenticator performs several validations using the purchase amount and user email
+    // If something goes wrong, we'll catch the error via try/catch
+
+    // Make sure the product cost makes sense according to your country's currency
+    // Too low or too high values might cause the mercadopago.authenticator method to throw an error
+    const productCost = parseFloat(document.getElementById('amount').value).toFixed(2);
+
+    // The user email must be from an existing Mercado Pago test user or a real Mercado Pago user
+    // Otherwise, the mercadopago.authenticator will not find the user and will throw an error
+    const userEmail = buyerEmail;
+
+    const button = this;
+    button.disabled = true;
+    button.innerText = 'Loading...';
+
+    try {
+        authenticator = await mercadopago.authenticator(productCost, userEmail);
+
+        // redirect to the payment form
+        $('.container__cart').fadeOut(500);
+        setTimeout(() => {
+            $('.container__payment').show(500).fadeIn();
+        }, 500);
+        
+    } catch (error) {
+        // For a list of possible errors, see: https://www.mercadopago.com/developers/en/docs/checkout-api-v2/payment-integration/fast-payments#bookmark_erros_da_subclasse_authenticator
+
+        alert("The authenticator method failed, details in console");
+        console.error(error);
+
+    } finally {
+        button.disabled = true;
+        button.innerText = 'Checkout';
+    }
 });
 
 // Handle Mercado Pago payment button click
@@ -161,8 +182,6 @@ function updatePrice(){
     document.getElementById('summary-total').innerText = '$ ' + amount;
     document.getElementById('amount').value = amount;
 };
-
-
 
 document.getElementById('quantity').addEventListener('change', updatePrice);
 updatePrice();

@@ -42,10 +42,10 @@ Fast Payments solo están disponibles en dispositivos móviles. Por lo tanto, pa
 1. Ejecuta el siguiente comando para iniciar la aplicación:
 
 ```bash
-MERCADO_PAGO_SAMPLE_PUBLIC_KEY=TU_CLAVE_PUBLICA MERCADO_PAGO_SAMPLE_ACCESS_TOKEN=TU_TOKEN_DE_ACCESO PAYER_EMAIL=EMAIL_DEL_PAGADOR npm start
+MERCADO_PAGO_SAMPLE_PUBLIC_KEY=TU_CLAVE_PUBLICA MERCADO_PAGO_SAMPLE_ACCESS_TOKEN=TU_TOKEN_DE_ACCESO npm start
 ```
 
-Recuerda reemplazar los valores de `TU_CLAVE_PUBLICA`, `TU_TOKEN_DE_ACCESO` y `EMAIL_DEL_PAGADOR` con las [credenciales](https://www.mercadopago.com/developers/panel) correspondientes de tu cuenta y un correo electrónico válido para ser usado como comprador/pagador. El correo electrónico puede ser de un usuario real o de un usuario de prueba.
+Recuerda reemplazar los valores de `TU_CLAVE_PUBLICA` y `TU_TOKEN_DE_ACCESO` con las [credenciales](https://www.mercadopago.com/developers/panel) correspondientes de tu cuenta.
 
 2. Ejecuta el siguiente comando en una nueva ventana de terminal para crear un túnel:
 ```bash

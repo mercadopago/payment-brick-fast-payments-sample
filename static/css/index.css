@@ -138,6 +138,21 @@ main {
     color: #1d2431
 }
 
+.shopping-cart .summary .email-section {
+    padding: 15px 0;
+}
+
+.shopping-cart .summary .email-label {
+    font-size: 1em;
+    font-weight: 400;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.shopping-cart .summary .email-input::placeholder {
+    color: #adb5bd;
+}
+
 @media (min-width: 768px) {
 
     .shopping-cart .items .product .info .product-details .product-detail {
