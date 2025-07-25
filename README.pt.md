@@ -56,7 +56,7 @@ npm run localtunnel
 
 ### :video_camera: Exemplo
 
-TODO: Inserir vídeo aqui
+https://github.com/user-attachments/assets/99a2c64c-74ee-4534-8058-a27b6fd6b1c8
 
 ## :handshake: Contribuindo
 
